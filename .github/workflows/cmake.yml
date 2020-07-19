@@ -1,0 +1,62 @@
+# @TODO: This workflow is in active development https://github.com/actions/starter-workflows/pull/47/files
+# Once the development is finished. The marketplace version should be used.
+
+name: CI
+on: [push]
+env:
+  BUILD_TYPE: Release
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+      - name: Build Executable
+        working-directory: ${{runner.workspace}}/build
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Test
+        working-directory: ${{runner.workspace}}/build
+        shell: bash
+        run: ctest -C $BUILD_TYPE
+
+  cppcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cppcheck Install
+        shell: bash
+        run: sudo apt-get install -y cppcheck
+
+      - name: Cppcheck Run
+        shell: bash
+        run: cppcheck --enable=all -I${{runner.workspace}}/genetic_tsp/genetic_tsp ${{runner.workspace}}/genetic_tsp/src
+
+  codestyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Code Style for src
+        uses: DoozyX/clang-format-lint-action@v0.5
+        with:
+          source: './src'
+          extensions: 'h,cpp'
+          clangFormatVersion: 6
+
+      - name: Code Style for genetic_tsp
+        uses: DoozyX/clang-format-lint-action@v0.5
+        with:
+          source: './genetic_tsp'
+          extensions: 'h,cpp'
+          clangFormatVersion: 6
