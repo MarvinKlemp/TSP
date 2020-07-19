@@ -40,7 +40,7 @@ jobs:
 
       - name: Cppcheck Run
         shell: bash
-        run: cppcheck --enable=all -I${{runner.workspace}}/genetic_tsp/genetic_tsp ${{runner.workspace}}/genetic_tsp/src
+        run: cppcheck --enable=all -I${{runner.workspace}}/TSP/genetic_tsp ${{runner.workspace}}/TSP/src
 
   codestyle:
     runs-on: ubuntu-latest
