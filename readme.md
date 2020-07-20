@@ -15,7 +15,7 @@ https://arxiv.org/abs/1203.3097
 ## How to use
 `./tsp <population_size> <elites_size> <iterations>`
 
-The executable runs 100 experiments (Algorithm is run 100 times and reset after each try to get a better statistical understanding). Each experiment the best chromosome is printed to stdout. Also a `genetic_tsp.csv` is generated. The csv rows contain the different experiments the columns contain the best chromosome after iteration i.
+The executable runs 100 experiments (Algorithm is run 100 times and reset after each try to get a better statistical understanding). In each experiment n iterations are executed. Each experiment the best chromosome after n iterations is printed to stdout. Also a `genetic_tsp.csv` is generated. The csv rows contain the different experiments the columns contain the best chromosome in each experiment after iteration i.
 
 Using `./vizualize.py <genetic_tsp.csv>` the results over 100 experiments can be displayed. `vizualize.py` needs `matplotlib` installed and will create `genetic_tsp_curves.png, genetic_tsp_boxplot.png, genetic_tsp_piechart.png`.
 
@@ -26,7 +26,7 @@ The project contains a valid cmake configuration. A c++17 compatible compiler is
 ```
 #!/bin/bash
 cmake -E make_directory ./build
-cd /opt/build
+cd ./build
 cmake ../ -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=RELEASE
 cmake --build . --config RELEASE
 ```
@@ -58,7 +58,7 @@ or the reverse:
 
 - Population size: 1000
 - Iterations: 1000
-- Elites: 10% (50)
+- Elites: 10% (100)
 - Mutation chance: 10%
 
 ![curves](results/genetic_tsp_curves.png)
