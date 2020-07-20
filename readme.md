@@ -1,5 +1,5 @@
 # TSP using Genetic Algorithms
-[![Actions Status](https://github.com/MarvinKlemp/TSP/workflows/CI/badge.svg)](https://github.com/MarvinKlemp/TSP/actions)
+![CI](https://github.com/MarvinKlemp/TSP/workflows/CI/badge.svg)
 
 # Algorithm
 After a short literature review most of the publications found are using genetic algorithms in order to solve the traveling salesman problem.
