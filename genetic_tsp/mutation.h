@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <execution>
 #include <memory>
 
 #include <locations.h>
@@ -12,9 +13,13 @@ public:
     virtual ~Mutation() = default;
     void mutate_population(std::unique_ptr<Population>& population) const
     {
-        for (auto& chromosome : *population) {
-            mutate(chromosome);
-        }
+        std::for_each(
+            std::execution::par_unseq,
+            std::begin(*population),
+            std::end(*population),
+            [this](auto& chromosome) {
+                mutate(chromosome);
+            });
     }
     virtual void mutate(Chromosome& chromosome) const = 0;
 };

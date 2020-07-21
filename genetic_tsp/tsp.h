@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <execution>
 #include <memory>
 #include <vector>
 
@@ -35,7 +36,7 @@ public:
     {
         m_population = std::make_unique<Population>();
         for (std::size_t i = 0; i < m_population_size; i++) {
-            m_population->push_back(Chromosome::random(Locations_Size - 1));
+            m_population->emplace_back(Chromosome::random(Locations_Size - 1));
         }
         evaluate(m_population);
         sort_by_fitness(m_population);
@@ -75,13 +76,17 @@ public:
 private:
     void evaluate(std::unique_ptr<Population>& population)
     {
-        for (Chromosome& chromosome : *population) {
-            chromosome.evaluate(m_locations);
-        }
+        std::for_each(
+            std::execution::par_unseq,
+            std::begin(*population),
+            std::end(*population),
+            [this](auto& chromosome) {
+                chromosome.evaluate(m_locations);
+            });
     }
     void sort_by_fitness(std::unique_ptr<Population>& population)
     {
-        std::sort(std::begin(*population), std::end(*population), [](const Chromosome& chromosome, const Chromosome& other_chromosome) {
+        std::sort(std::execution::par_unseq, std::begin(*population), std::end(*population), [](const Chromosome& chromosome, const Chromosome& other_chromosome) {
             return chromosome.fitness() > other_chromosome.fitness();
         });
     }

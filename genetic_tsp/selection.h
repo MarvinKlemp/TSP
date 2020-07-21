@@ -37,11 +37,9 @@ public:
 
         auto parents = std::make_unique<ParentMapping>();
         for (std::size_t i = 0; i < num; i++) {
-            auto child = std::pair<Chromosome, Chromosome>{
+            parents->emplace_back(std::pair<Chromosome, Chromosome>{
                 pick(*population, total_fitness),
-                pick(*population, total_fitness)
-            };
-            parents->push_back(std::move(child));
+                pick(*population, total_fitness) });
         }
 
         return parents;
