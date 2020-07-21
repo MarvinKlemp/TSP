@@ -66,8 +66,6 @@ int main(int argc, char* argv[])
 
     std::ofstream output_file("./genetic_tsp.csv");
     std::ostream_iterator<long double> output_iterator(output_file, ",");
-    std::ostringstream vts;
-
     for (std::size_t i = 0; i < 100; i++) {
         std::cout << "Experiment: " << i + 1 << "\n";
         auto [best, stats] = genetic_tsp.iterate(iterations);
