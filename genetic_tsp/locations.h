@@ -49,17 +49,7 @@ using Tour = std::vector<std::size_t>;
 using Edge = std::pair<std::size_t, std::size_t>;
 
 struct Chromosome {
-    Chromosome()
-        : m_tour({})
-        , m_length(0U)
-    {
-    }
     Chromosome(const Chromosome& other) = default;
-    explicit Chromosome(std::size_t size)
-        : m_tour((size))
-        , m_length(0U)
-    {
-    }
     explicit Chromosome(Tour&& tour)
         : m_tour(std::move(tour))
         , m_length(0U)
@@ -68,7 +58,7 @@ struct Chromosome {
     static Chromosome random(std::size_t size)
     {
         // start and beginning are not stored as they are always locations[0]
-        std::vector<std::size_t> tour(size - 1);
+        Tour tour(size - 1);
         for (std::size_t i = 1; i < size; i++) {
             tour.at(i - 1) = i;
         }

@@ -17,20 +17,15 @@ TEST(RouletteWheelSelection, is_construcable)
 
 TEST(ReverseSequenceMutation, is_selecting_parents_correctly)
 {
-    TSP::Chromosome c1{ 1 };
-    c1.m_tour = { 1 };
+    TSP::Chromosome c1{ { 1 } };
     c1.m_length = 100;
-    TSP::Chromosome c2{ 2 };
-    c2.m_tour = { 2 };
+    TSP::Chromosome c2{ { 2 } };
     c2.m_length = 100;
-    TSP::Chromosome c3{ 3 };
-    c3.m_tour = { 3 };
+    TSP::Chromosome c3{ { 3 } };
     c3.m_length = 100;
-    TSP::Chromosome c4{ 4 };
+    TSP::Chromosome c4{ { 4 } };
     c4.m_length = 100;
-    c4.m_tour = { 4 };
-    TSP::Chromosome c5{ 5 };
-    c5.m_tour = { 5 };
+    TSP::Chromosome c5{ { 5 } };
     c5.m_length = 100;
     auto population = std::make_unique<TSP::Population>();
     *population = { c1, c2, c3, c4, c5 };
